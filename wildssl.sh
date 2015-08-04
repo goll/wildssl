@@ -99,8 +99,8 @@ openssl req -new ${MD} -utf8 -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN
 # Generate and sign the client certificate
 ##
 
-###openssl x509 -req ${MD} -in "${CLIENT_CN}".csr -passin fd:3 -extfile wildcard.cnf -CA "${CA_CN}"_CA.crt -CAkey "${CA_CN}"_CA.key -CAcreateserial -CAserial index.srl -days ${DAYS} -out "${CLIENT_CN}".crt 3<<<${PASSWORD} > /dev/null 2>&1
-openssl x509 -req ${MD} -in "${CLIENT_CN}".csr -extfile wildcard.cnf -CA "${CA_CN}"_CA.crt -CAkey "${CA_CN}"_CA.key -CAcreateserial -CAserial index.srl -days ${DAYS} -out "${CLIENT_CN}".crt > /dev/null 2>&1
+###openssl x509 -req ${MD} -in "${CLIENT_CN}".csr -passin fd:3 -extensions v3_req -extfile wildcard.cnf -CA "${CA_CN}"_CA.crt -CAkey "${CA_CN}"_CA.key -CAcreateserial -CAserial index.srl -days ${DAYS} -out "${CLIENT_CN}".crt 3<<<${PASSWORD} > /dev/null 2>&1
+openssl x509 -req ${MD} -in "${CLIENT_CN}".csr -extensions v3_req -extfile wildcard.cnf -CA "${CA_CN}"_CA.crt -CAkey "${CA_CN}"_CA.key -CAcreateserial -CAserial index.srl -days ${DAYS} -out "${CLIENT_CN}".crt > /dev/null 2>&1
 
 rm -f {"${CLIENT_CN}".csr,wildcard.cnf}
 
