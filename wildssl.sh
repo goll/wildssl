@@ -15,7 +15,8 @@
 #                - Validity of the certificates is 10 years
 #                - Private keys are not encrypted by default
 #                - Wildcard certificate uses SAN extensions and works on root domain
-#                - Optionally uncomment triple commented lines to password protect key files
+#                - Optionally uncomment triple commented lines and delete lines below them
+#                  to password protect key files
 #        AUTHOR: Adrian Goll (goll[at]kset.org)
 #===============================================================================
 
@@ -28,7 +29,7 @@ MD="-sha256"
 SUBJECT="C=XX/ST=State/L=Locality/O=Organization/OU=Organizational Unit"
 
 ###read -e -p "Enter the key password: " PASSWORD
-read -e -p "Enter the domain for the CA cert: " CA_CN
+read -e -p "Enter the domain for the cert: " CA_CN
 CLIENT_CN="wildcard.${CA_CN}"
 
 ##
@@ -89,8 +90,8 @@ openssl genrsa -out "${CLIENT_CN}".key ${KEYSIZE} > /dev/null 2>&1
 # Generate client CSR
 ##
 
-###openssl req -new ${MD} -subj "/${SUBJECT}/CN=${CLIENT_CN}" -key "${CLIENT_CN}".key -passin fd:3 -out "${CLIENT_CN}".csr 3<<<${PASSWORD} > /dev/null 2>&1
-openssl req -new ${MD} -subj "/${SUBJECT}/CN=${CLIENT_CN}" -key "${CLIENT_CN}".key -out "${CLIENT_CN}".csr > /dev/null 2>&1
+###openssl req -new ${MD} -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -passin fd:3 -out "${CLIENT_CN}".csr 3<<<${PASSWORD} > /dev/null 2>&1
+openssl req -new ${MD} -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -out "${CLIENT_CN}".csr > /dev/null 2>&1
 
 ##
 # Generate and sign the client certificate
