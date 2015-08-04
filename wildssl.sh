@@ -52,7 +52,7 @@ cat << EOF > wildcard.cnf
 req_extensions = v3_req
 
 [v3_req]
-keyUsage = keyEncipherment, dataEncipherment
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
 basicConstraints = CA:false
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
