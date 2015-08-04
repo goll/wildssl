@@ -76,8 +76,8 @@ fi
 ##
 
 if [[ ! -f ${CA_CN}_CA.crt ]]; then
-###openssl req -x509 -new ${MD} -subj "/${SUBJECT/CN=${CA_CN} Root CA" -key "${CA_CN}"_CA.key -passin fd:3 -days ${DAYS} -out "${CA_CN}"_CA.crt 3<<<${PASSWORD} > /dev/null 2>&1
-openssl req -x509 -new ${MD} -subj "/${SUBJECT}/CN=${CA_CN} Root CA" -key "${CA_CN}"_CA.key -days ${DAYS} -out "${CA_CN}"_CA.crt > /dev/null 2>&1
+###openssl req -x509 -new ${MD} -utf8 -subj "/${SUBJECT/CN=${CA_CN} Root CA" -key "${CA_CN}"_CA.key -passin fd:3 -days ${DAYS} -out "${CA_CN}"_CA.crt 3<<<${PASSWORD} > /dev/null 2>&1
+openssl req -x509 -new ${MD} -utf8 -subj "/${SUBJECT}/CN=${CA_CN} Root CA" -key "${CA_CN}"_CA.key -days ${DAYS} -out "${CA_CN}"_CA.crt > /dev/null 2>&1
 fi
 
 ##
@@ -90,8 +90,8 @@ openssl genrsa -out "${CLIENT_CN}".key ${KEYSIZE} > /dev/null 2>&1
 # Generate client CSR
 ##
 
-###openssl req -new ${MD} -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -passin fd:3 -out "${CLIENT_CN}".csr 3<<<${PASSWORD} > /dev/null 2>&1
-openssl req -new ${MD} -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -out "${CLIENT_CN}".csr > /dev/null 2>&1
+###openssl req -new ${MD} -utf8 -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -passin fd:3 -out "${CLIENT_CN}".csr 3<<<${PASSWORD} > /dev/null 2>&1
+openssl req -new ${MD} -utf8 -subj "/${SUBJECT}/CN=*.${CA_CN}" -key "${CLIENT_CN}".key -out "${CLIENT_CN}".csr > /dev/null 2>&1
 
 ##
 # Generate and sign the client certificate
